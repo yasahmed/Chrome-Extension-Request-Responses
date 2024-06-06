@@ -1,0 +1,46 @@
+{
+  "name": "Get Request Response",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "permissions": [
+    "declarativeNetRequest",
+    "activeTab",
+    "scripting",
+    "webNavigation"
+  ],
+  "description": "A chrome extension for get http/s's response",
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": [
+        "./content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "web_accessible_resources": [{
+    "resources": ["injected.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}
+
+
+
