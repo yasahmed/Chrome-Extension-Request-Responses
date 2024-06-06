@@ -1,0 +1,15 @@
+   const data = [
+                { "Id": 1, "Deps": ["1", "2"] },
+                { "Id": 2, "Deps": ["3", "4"] }
+            ];
+
+            // Convert JSON to CSV
+            let csvContent = "Id,Deps\n"; // Header row
+            data.forEach(item => {
+                const id = item.Id;
+                const deps = item.Deps.join('\n'); // Join Deps with newline
+                csvContent += `${id},"${deps}"\n`;
+            });
+
+            // Create a Blob from the CSV content
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
