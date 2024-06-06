@@ -1,0 +1,23 @@
+(function() {
+    console.log("Content script injected at document start");
+  
+    // Override fetch
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      return originalFetch.apply(this, args).then(response => {
+        response.clone().text().then(text => {
+          console.log("Fetch response:", text);
+        }).catch(error => console.error('Error fetching response text:', error));
+        return response;
+      }).catch(error => console.error('Error in fetch call:', error));
+    };
+  
+    // Override XMLHttpRequest
+    const originalXhrOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(...args) {
+      this.addEventListener('load', function() {
+        console.log('XHR response:', this.responseText);
+      });
+      return originalXhrOpen.apply(this, args);
+    };
+  })();
